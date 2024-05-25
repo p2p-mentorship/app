@@ -22,6 +22,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const { openSIWE } = useModal();
 
     useEffect(() => {
+        if (!signMessage) return;
+
         if (!address) {
             setNonceMessage(null);
             return;
@@ -37,7 +39,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
                 signMessage({ message });
             })();
         }
-    }, [address]);
+    }, [address, signMessage]);
 
     async function connect() {
         if (!address) {
