@@ -113,7 +113,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Tabs value={currentTab} onValueChange={setCurrentTab} defaultValue="account" className="w-[600px]">
+      <Tabs value={currentTab} onValueChange={setCurrentTab} defaultValue="account" className="w-[400px] lg-w-[600px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Offer Help</TabsTrigger>
           <TabsTrigger value="password">Get Mentorship</TabsTrigger>
