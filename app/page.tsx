@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, createRef } from 'react';
 import axios from 'axios';
 import { Button } from "@/components/ui/button"
 import {
@@ -30,23 +30,6 @@ interface SubmitQueryData {
   telegramUsername: string;
 }
 
-async function submitQuery(data: SubmitQueryData, token: string) {
-  try {
-    const response = await axios.post(
-      '/api/queries',
-      data,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    console.error('Error submitting query:', error);
-    throw error;
-  }
-}
 
 // async function handleSubmitingRequest(queryData: SubmitQueryData, token: string) {
 //   // const queryData = {
@@ -65,6 +48,7 @@ async function submitQuery(data: SubmitQueryData, token: string) {
 // }
 
 export default function Home() {
+  const tabRef = createRef<HTMLDivElement>();
   const [requests, setRequests] = useState(requestsMock)
   const [queries, setQueries] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -75,35 +59,61 @@ export default function Home() {
     title: '',
     description: '',
   });
+  const [currentTab, setCurrentTab] = useState("account");
+
+  async function submitQuery(data: SubmitQueryData, token: string) {
+    try {
+      const response = await axios.post(
+        '/api/queries',
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setFormData({telegramUsername: "", title: "", description: ""});
+      alert("Request Created Successfully!!!");
+      fetchData();
+      setCurrentTab("account");
+    } catch (error) {
+      console.error('Error submitting query:', error);
+      throw error;
+    }
+  }
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
+  
 
+  const fetchData = useCallback(() => {
+    (async () => {
+     setIsLoading(true);
+     setError(null);
+     try {
+       const response = await axios.get('/api/queries');
+       console.log(response.data)
+       setQueries(response.data.queries);
+     } catch (error) {
+       console.error('Error fetching queries:', error);
+       // setError(error);
+     } finally {
+       setIsLoading(false);
+     }
+   })();
+  }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await axios.get('/api/queries');
-        console.log(response.data)
-        setQueries(response.data.queries);
-      } catch (error) {
-        console.error('Error fetching queries:', error);
-        // setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
-  }, []);
+  }, [fetchData]);
+
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Tabs defaultValue="account" className="w-[600px]">
+      <Tabs value={currentTab} onValueChange={setCurrentTab} defaultValue="account" className="w-[600px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Offer Help</TabsTrigger>
           <TabsTrigger value="password">Get Mentorship</TabsTrigger>
