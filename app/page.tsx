@@ -33,7 +33,7 @@ import { cn } from "@/lib/utils"
 import { Switch } from "@/components/ui/switch"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-export const requestsMock = [
+ const requestsMock = [
   {
     id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
     name: "William Smith",
@@ -72,7 +72,7 @@ export default function Home() {
         setQueries(response.data.queries);
       } catch (error) {
         console.error('Error fetching queries:', error);
-        setError(error);
+        // setError(error);
       } finally {
         setIsLoading(false);
       }
@@ -100,9 +100,9 @@ export default function Home() {
           <ScrollArea className="h-screen/2">
       <div className="flex flex-col gap-2 p-4 pt-0">
         {!queries ? "" : (
-          queries.map((item) => (
+          queries.map((item: any) => (
             <a 
-            key={item.id}
+            key={item?.id}
             href={`https://t.me/${item.telegramUsername}`} target="_blank"
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
@@ -112,7 +112,7 @@ export default function Home() {
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center">
                 <div className="flex items-center gap-2">
-                  <div className="font-semibold">{item.title}</div>
+                  <div className="font-semibold">{item?.title}</div>
                 </div>
                 <div
                   className={cn(
@@ -128,7 +128,7 @@ export default function Home() {
                   } */}
                 </div>
               </div>
-              <div className="text-xs font-medium">{item.telegramUsername}</div>
+              <div className="text-xs font-medium">{item?.telegramUsername}</div>
             </div>
             <div className="line-clamp-2 text-xs text-muted-foreground">
               {item.description.substring(0, 300)}
