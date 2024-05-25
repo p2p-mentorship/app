@@ -90,35 +90,39 @@ export default function Home() {
                 <div className="flex flex-col gap-2 p-4 pt-0">
                   {!queries ? "" : (
                     queries.map((item: any) => (
-                      <a
-                        key={item?.id}
-                        href={`https://t.me/${item.telegramUsername}`} target="_blank"
-                        className={cn(
-                          "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-                          "bg-muted"
-                        )}
-                      >
-                        <div className="flex w-full flex-col gap-1">
-                          <div className="flex items-center">
-                            <div className="flex items-center gap-2">
-                              <div className="font-semibold">{item?.title}</div>
-                            </div>
-                            <div
-                              className={cn(
-                                "ml-auto text-xs",
-                              )}
-                            >
-                              {/* {formatDistanceToNow(new Date(item.date), {
-                          addSuffix: true,
-                        })} */}
-                              {/* ToDo */}
-                              {/* {
-                          item.date
-                        } */}
-                            </div>
-                          </div>
-                        </div>
-                      </a>
+                      <a 
+            key={item?.id}
+            href={`https://t.me/${item.telegramUsername}`} target="_blank"
+            className={cn(
+              "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+              "bg-muted"
+            )}
+            >
+            <div className="flex w-full flex-col gap-1">
+              <div className="flex items-center">
+                <div className="flex items-center gap-2">
+                  <div className="font-semibold">{item?.title}</div>
+                </div>
+                <div
+                  className={cn(
+                    "ml-auto text-xs",
+                  )}
+                >
+                  {/* {formatDistanceToNow(new Date(item.date), {
+                    addSuffix: true,
+                  })} */}
+                  {/* ToDo */}
+                  {/* {
+                    item.date
+                  } */}
+                </div>
+              </div>
+              <div className="text-xs font-medium">{item?.telegramUsername}</div>
+            </div>
+            <div className="line-clamp-2 text-xs text-muted-foreground">
+              {item.description.substring(0, 300)}
+            </div>
+          </a>
                     )))}</div>
               </ScrollArea>
             </CardContent>
