@@ -2,13 +2,14 @@
 
 import "./globals.css";
 import { WagmiProvider } from "wagmi";
-import { wagmiConfig } from "./config";
+import { wagmiConfig } from "./wagmiConfig";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ConnectKitProvider } from "connectkit";
 import { AuthContextProvider } from "./contexts/AuthContexts";
 import { Inter as FontSans } from "next/font/google"
 import "./globals.css";
 import { cn } from "@/lib/utils"
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,11 +33,11 @@ export default function RootLayout({
       >
         <WagmiProvider config={wagmiConfig}>
           <QueryClientProvider client={queryClient}>
-            <ConnectKitProvider>
+            <RainbowKitProvider>
               <AuthContextProvider>
                 {children}
               </AuthContextProvider>
-            </ConnectKitProvider>
+            </RainbowKitProvider>
           </QueryClientProvider>
         </WagmiProvider>
       </body>
