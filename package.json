@@ -9,29 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.14.0",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tabs": "^1.0.4",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "jotai": "^2.8.1",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.379.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"
-  },
-  "devDependencies": {
-    "@prisma/client": "5.14.0",
-    "jsonwebtoken": "^9.0.2",
-    "next": "14.2.3",
-    "prisma": "^5.14.0",
-    "react": "^18",
-    "react-dom": "^18",
-    "viem": "^2.12.1"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.6",
