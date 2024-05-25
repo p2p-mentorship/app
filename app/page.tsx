@@ -18,22 +18,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { BellRing, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Switch } from "@/components/ui/switch"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
- const requestsMock = [
+const requestsMock = [
   {
     id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
     name: "William Smith",
@@ -127,6 +116,29 @@ export default function Home() {
                     item.date
                   } */}
                 </div>
+              </ScrollArea>
+            </CardContent>
+            <CardFooter>
+              <Button>Help</Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+        <TabsContent value="password">
+          <Card>
+            <CardHeader>
+              <CardTitle>Get Mentorship</CardTitle>
+              <CardDescription>
+                Get immediate help from volunteers.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="space-y-1">
+                <Label htmlFor="tg">Telegram Name</Label>
+                <Input id="tg" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="title">Title</Label>
+                <Input id="title" />
               </div>
               <div className="text-xs font-medium">{item?.telegramUsername}</div>
             </div>
@@ -171,12 +183,12 @@ export default function Home() {
               //   ToDo
               // }
               >
-              Request
-            </Button>
-          </CardFooter>
-        </Card>
-      </TabsContent>
-    </Tabs>
+                Request
+              </Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </main>
   );
 }
