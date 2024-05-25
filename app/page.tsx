@@ -73,56 +73,60 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Tabs defaultValue="account" className="w-[600px]">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="account">Offer Help</TabsTrigger>
-        <TabsTrigger value="password">Get Mentorship</TabsTrigger>
-      </TabsList>
-      <TabsContent value="account">
-        <Card>
-          <CardHeader>
-            <CardTitle>Become Mentor</CardTitle>
-            <CardDescription>
-              Offer your help to newcomers.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-          <ScrollArea className="h-screen/2">
-      <div className="flex flex-col gap-2 p-4 pt-0">
-        {!queries ? "" : (
-          queries.map((item: any) => (
-            <a 
-            key={item?.id}
-            href={`https://t.me/${item.telegramUsername}`} target="_blank"
-            className={cn(
-              "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-              "bg-muted"
-            )}
-            >
-            <div className="flex w-full flex-col gap-1">
-              <div className="flex items-center">
-                <div className="flex items-center gap-2">
-                  <div className="font-semibold">{item?.title}</div>
-                </div>
-                <div
-                  className={cn(
-                    "ml-auto text-xs",
-                  )}
-                >
-                  {/* {formatDistanceToNow(new Date(item.date), {
-                    addSuffix: true,
-                  })} */}
-                  {/* ToDo */}
-                  {/* {
-                    item.date
-                  } */}
-                </div>
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="account">Offer Help</TabsTrigger>
+          <TabsTrigger value="password">Get Mentorship</TabsTrigger>
+        </TabsList>
+        <TabsContent value="account">
+          <Card>
+            <CardHeader>
+              <CardTitle>Become Mentor</CardTitle>
+              <CardDescription>
+                Offer your help to newcomers.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <ScrollArea className="h-screen/2">
+                <div className="flex flex-col gap-2 p-4 pt-0">
+                  {!queries ? "" : (
+                    queries.map((item: any) => (
+                      <a
+                        key={item?.id}
+                        href={`https://t.me/${item.telegramUsername}`} target="_blank"
+                        className={cn(
+                          "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+                          "bg-muted"
+                        )}
+                      >
+                        <div className="flex w-full flex-col gap-1">
+                          <div className="flex items-center">
+                            <div className="flex items-center gap-2">
+                              <div className="font-semibold">{item?.title}</div>
+                            </div>
+                            <div
+                              className={cn(
+                                "ml-auto text-xs",
+                              )}
+                            >
+                              {/* {formatDistanceToNow(new Date(item.date), {
+                          addSuffix: true,
+                        })} */}
+                              {/* ToDo */}
+                              {/* {
+                          item.date
+                        } */}
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    )))}</div>
               </ScrollArea>
             </CardContent>
-            <CardFooter>
-              <Button>Help</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
+            {/* <CardFooter>
+            <Button>Help</Button>
+          </CardFooter> */}
+          </Card >
+        </TabsContent >
         <TabsContent value="password">
           <Card>
             <CardHeader>
@@ -140,46 +144,14 @@ export default function Home() {
                 <Label htmlFor="title">Title</Label>
                 <Input id="title" />
               </div>
-              <div className="text-xs font-medium">{item?.telegramUsername}</div>
-            </div>
-            <div className="line-clamp-2 text-xs text-muted-foreground">
-              {item.description.substring(0, 300)}
-            </div>
-          </a>
-        )))}
-      </div>
-    </ScrollArea>
-          </CardContent>
-          {/* <CardFooter>
-            <Button>Help</Button>
-          </CardFooter> */}
-        </Card>
-      </TabsContent>
-      <TabsContent value="password">
-        <Card>
-          <CardHeader>
-            <CardTitle>Get Mentorship</CardTitle>
-            <CardDescription>
-              Get immediate help from volunteers.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="tg">Telegram Name</Label>
-              <Input id="tg" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="title">Title</Label>
-              <Input id="title" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="problem">Problem</Label>
-              <Input id="problem" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button
-            // onClick={() =>
+              <div className="space-y-1">
+                <Label htmlFor="problem">Problem</Label>
+                <Input id="problem" />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button
+              // onClick={() =>
               //   ToDo
               // }
               >
@@ -188,7 +160,7 @@ export default function Home() {
             </CardFooter>
           </Card>
         </TabsContent>
-      </Tabs>
-    </main>
+      </Tabs >
+    </main >
   );
 }
