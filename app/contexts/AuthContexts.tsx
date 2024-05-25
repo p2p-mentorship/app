@@ -4,6 +4,7 @@ import { useModal } from "connectkit";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 import axios from "axios";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 interface IAuthContext {
     connect: () => Promise<void>;
@@ -19,7 +20,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const { address } = useAccount();
 
     const { signMessage, data } = useSignMessage();
-    const { openSIWE } = useModal();
+    const { openConnectModal } = useConnectModal();
 
     useEffect(() => {
         if (!signMessage) return;
@@ -42,9 +43,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }, [address, signMessage]);
 
     async function connect() {
+        if (!openConnectModal) return;
         if (!address) {
             // setOpen(true);
-            openSIWE(true);
+            openConnectModal();
             return;
         }
 

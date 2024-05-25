@@ -37,7 +37,7 @@ interface SubmitQueryData {
 //   //   description: 'This is a detailed description of my query.',
 //   //   telegramUsername: '@johndoe',
 //   // };
-  
+
 //   submitQuery(queryData, token)
 //     .then(() => {
 //       console.log('Query submission handled successfully.');
@@ -53,7 +53,7 @@ export default function Home() {
   const [queries, setQueries] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const {connect, token} = useAuthContext();
+  const { connect, token } = useAuthContext();
   const [formData, setFormData] = useState({
     telegramUsername: '',
     title: '',
@@ -73,7 +73,7 @@ export default function Home() {
           },
         }
       );
-      setFormData({telegramUsername: "", title: "", description: ""});
+      setFormData({ telegramUsername: "", title: "", description: "" });
       alert("Request Created Successfully!!!");
       fetchData();
       setCurrentTab("account");
@@ -87,23 +87,23 @@ export default function Home() {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-  
+
 
   const fetchData = useCallback(() => {
     (async () => {
-     setIsLoading(true);
-     setError(null);
-     try {
-       const response = await axios.get('/api/queries');
-       console.log(response.data)
-       setQueries(response.data.queries);
-     } catch (error) {
-       console.error('Error fetching queries:', error);
-       // setError(error);
-     } finally {
-       setIsLoading(false);
-     }
-   })();
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get('/api/queries');
+        console.log(response.data)
+        setQueries(response.data.queries);
+      } catch (error) {
+        console.error('Error fetching queries:', error);
+        // setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, []);
 
   useEffect(() => {
@@ -131,39 +131,39 @@ export default function Home() {
                 <div className="flex flex-col gap-2 p-4 pt-0">
                   {!queries ? "" : (
                     queries.map((item: any) => (
-                      <a 
-            key={item?.id}
-            href={`https://t.me/${item?.telegramUsername}?text=${tgStarter}`} target="_blank"
-            className={cn(
-              "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-              "bg-muted"
-            )}
-            >
-            <div className="flex w-full flex-col gap-1">
-              <div className="flex items-center">
-                <div className="flex items-center gap-2">
-                  <div className="font-semibold">{item?.title}</div>
-                </div>
-                <div
-                  className={cn(
-                    "ml-auto text-xs",
-                  )}
-                >
-                  {/* {formatDistanceToNow(new Date(item.date), {
+                      <a
+                        key={item?.id}
+                        href={`https://t.me/${item?.telegramUsername}?text=${tgStarter}`} target="_blank"
+                        className={cn(
+                          "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+                          "bg-muted"
+                        )}
+                      >
+                        <div className="flex w-full flex-col gap-1">
+                          <div className="flex items-center">
+                            <div className="flex items-center gap-2">
+                              <div className="font-semibold">{item?.title}</div>
+                            </div>
+                            <div
+                              className={cn(
+                                "ml-auto text-xs",
+                              )}
+                            >
+                              {/* {formatDistanceToNow(new Date(item.date), {
                     addSuffix: true,
                   })} */}
-                  {/* ToDo */}
-                  {/* {
+                              {/* ToDo */}
+                              {/* {
                     item.date
                   } */}
-                </div>
-              </div>
-              <div className="text-xs font-medium">{item?.telegramUsername}</div>
-            </div>
-            <div className="line-clamp-2 text-xs text-muted-foreground">
-              {item.description.substring(0, 300)}
-            </div>
-          </a>
+                            </div>
+                          </div>
+                          <div className="text-xs font-medium">{item?.telegramUsername}</div>
+                        </div>
+                        <div className="line-clamp-2 text-xs text-muted-foreground">
+                          {item.description.substring(0, 300)}
+                        </div>
+                      </a>
                     )))}</div>
               </ScrollArea>
             </CardContent>
@@ -196,9 +196,9 @@ export default function Home() {
             </CardContent>
             <CardFooter>
               {token ? <Button
-              onClick={() =>
-                submitQuery(formData, token)
-              }
+                onClick={() =>
+                  submitQuery(formData, token)
+                }
               >
                 Request
               </Button> : <Button onClick={connect}>Connect</Button>}
