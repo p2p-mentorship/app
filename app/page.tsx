@@ -18,38 +18,69 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Textarea } from "@/components/ui/textarea"
+import { useAuthContext } from './contexts/AuthContexts';
+import { requestsMock, tgStarter } from './mocks';
 
-const requestsMock = [
-  {
-    id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a",
-    name: "William Smith",
-    email: "williamsmith@example.com",
-    subject: "Meeting Tomorrow",
-    text: "Hi, let's have a meeting tomorrow to discuss the project. I've been reviewing the project details and have some ideas I'd like to share. It's crucial that we align on our next steps to ensure the project's success.\n\nPlease come prepared with any questions or insights you may have. Looking forward to our meeting!\n\nBest regards, William",
-    date: "2023-10-22T09:00:00",
-    read: true,
-    labels: ["meeting", "work", "important"],
-  },
-  {
-    id: "3e7c3f6d-bdf5-46ae-8d90-171300f27ae2",
-    name: "Bob Johnson",
-    email: "bobjohnson@example.com",
-    subject: "Weekend Plans",
-    text: "Any plans for the weekend? I was thinking of going hiking in the nearby mountains. It's been a while since we had some outdoor fun.\n\nIf you're interested, let me know, and we can plan the details. It'll be a great way to unwind and enjoy nature.\n\nLooking forward to your response!\n\nBest, Bob",
-    date: "2023-04-10T11:45:00",
-    read: true,
-    labels: ["personal"],
+interface SubmitQueryData {
+  title: string;
+  description: string;
+  telegramUsername: string;
+}
+
+async function submitQuery(data: SubmitQueryData, token: string) {
+  try {
+    const response = await axios.post(
+      '/api/queries',
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    console.error('Error submitting query:', error);
+    throw error;
   }
-]
+}
+
+// async function handleSubmitingRequest(queryData: SubmitQueryData, token: string) {
+//   // const queryData = {
+//   //   title: 'My Query Title',
+//   //   description: 'This is a detailed description of my query.',
+//   //   telegramUsername: '@johndoe',
+//   // };
+  
+//   submitQuery(queryData, token)
+//     .then(() => {
+//       console.log('Query submission handled successfully.');
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//     });
+// }
 
 export default function Home() {
   const [requests, setRequests] = useState(requestsMock)
   const [queries, setQueries] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const {connect, token} = useAuthContext();
+  const [formData, setFormData] = useState({
+    telegramUsername: '',
+    title: '',
+    description: '',
+  });
+
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,7 +123,7 @@ export default function Home() {
                     queries.map((item: any) => (
                       <a 
             key={item?.id}
-            href={`https://t.me/${item.telegramUsername}`} target="_blank"
+            href={`https://t.me/${item?.telegramUsername}?text=${tgStarter}`} target="_blank"
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
               "bg-muted"
@@ -142,25 +173,25 @@ export default function Home() {
             <CardContent className="space-y-2">
               <div className="space-y-1">
                 <Label htmlFor="tg">Telegram Name</Label>
-                <Input id="tg" />
+                <Input id="tg" name="telegramUsername" placeholder="@Telegram_Username" onChange={handleChange} value={formData.telegramUsername} />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="title">Title</Label>
-                <Input id="title" />
+                <Input id="title" name="title" placeholder="Hackathon Problem" onChange={handleChange} value={formData.title} />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="problem">Problem</Label>
-                <Input id="problem" />
+                <Label htmlFor="description">Problem</Label>
+                <Textarea id="description" name="description" placeholder="Detailed hackathon problem description" onChange={handleChange} value={formData.description} />
               </div>
             </CardContent>
             <CardFooter>
-              <Button
-              // onClick={() =>
-              //   ToDo
-              // }
+              {token ? <Button
+              onClick={() =>
+                submitQuery(formData, token)
+              }
               >
                 Request
-              </Button>
+              </Button> : <Button onClick={connect}>Connect</Button>}
             </CardFooter>
           </Card>
         </TabsContent>
