@@ -133,7 +133,7 @@ export default function Home() {
                     queries.map((item: any) => (
                       <a 
             key={item?.id}
-            href={`https://t.me/${item?.telegramUsername}?text=${tgStarter}`} target="_blank"
+            href={`https://t.me/${item?.telegramUsername?.replace(/^@/, '')}?text=${tgStarter}`} target="_blank"
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
               "bg-muted"
@@ -158,7 +158,7 @@ export default function Home() {
                   } */}
                 </div>
               </div>
-              <div className="text-xs font-medium">{item?.telegramUsername}</div>
+              <div className="text-xs font-medium">@{item?.telegramUsername?.replace(/^@/, '')}</div>
             </div>
             <div className="line-clamp-2 text-xs text-muted-foreground">
               {item.description.substring(0, 300)}
