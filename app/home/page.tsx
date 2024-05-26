@@ -43,7 +43,7 @@ interface SubmitQueryData {
 export default function Home() {
   const tabRef = createRef<HTMLDivElement>();
   const [requests, setRequests] = useState(requestsMock)
-  const [queries, setQueries] = useState([]);
+  const [queries, setQueries] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { connect, token } = useAuthContext();
@@ -141,7 +141,7 @@ export default function Home() {
         <div className="overflow-hidden whitespace-nowrap py-1 bg-[#FFF348] border-b border-[#111110] z-10">
           <div className="inline-block animate-marquee">
             <p className="inline-block px-4 uppercase text-[#1f4b60] font-medium">
-            P2P Mentorship is an innovative platform that connects individuals seeking guidance on web3 technologies with experienced mentors. Users can ask questions, receive personalized help, and build valuable skills through peer-to-peer interactions.{" "}
+              P2P Mentorship is an innovative platform that connects individuals seeking guidance on web3 technologies with experienced mentors. Users can ask questions, receive personalized help, and build valuable skills through peer-to-peer interactions.{" "}
             </p>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function Home() {
         <div className="w-full h-2/3 relative flex flex-col p-16 ">
           <div className="bg-white text-black z-10 w-1/2 self-end rounded-xl p-8 flex flex-col gap-y-4 shadow-xl border border-black -translate-x-10">
             <p className="text-lg font-cabin ">
-            P2P Mentorship is an innovative platform that connects individuals seeking guidance on web3 technologies with experienced mentors. Users can ask questions, receive personalized help, and build valuable skills through peer-to-peer interactions.
+              P2P Mentorship is an innovative platform that connects individuals seeking guidance on web3 technologies with experienced mentors. Users can ask questions, receive personalized help, and build valuable skills through peer-to-peer interactions.
             </p>
             <button className="self-end bg-[#FFF348] px-6 py-2 rounded-3xl border border-black hover:scale-105 duration-300 ease-in font-mediums">
               Request Help
@@ -175,7 +175,7 @@ export default function Home() {
           Offer Guidance
         </h1>
         <div className="flex flex-wrap w-full border-t border-t-[#111110]">
-        {!queries ? "" : queries.map((issue, i) => (
+          {!queries ? "" : queries.map((issue, i) => (
             <div
               key={i}
               className="px-4 py-8 w-[20%] border-r border-b border-b-[#111110] border-r-[#111110] justify-between flex flex-col min-h-[25vh] gap-y-6 hover:bg-[#fff348d7] "
@@ -197,12 +197,12 @@ export default function Home() {
                 >
                   {expandedIndex === i ? "Read Less" : "Read More"}
                 </button>
-                <a 
+                <a
                   key={issue?.id}
                   href={`https://t.me/${issue?.telegramUsername?.replace(/^@/, '')}?text=${tgStarter}`} target="_blank">
-                    <button className="text-sm self-end border border-[#111110] py-1 px-3 rounded-2xl bg-white">
-                      Help
-                    </button>
+                  <button className="text-sm self-end border border-[#111110] py-1 px-3 rounded-2xl bg-white">
+                    Help
+                  </button>
                 </a>
                 {/* <button className="text-sm self-end border border-[#111110] py-1 px-3 rounded-2xl bg-white">
                   Guide
@@ -269,13 +269,13 @@ export default function Home() {
             Connect
           </button> */}
           {token ? <button className="bg-[#FFF348] self-end px-4 py-1 rounded-md"
-                onClick={() =>
-                  submitQuery(formData, token)
-                }
-              >
-                Request
-              </button> : <button className="bg-[#FFF348] self-end px-4 py-1 rounded-md"
-              onClick={connect}>Connect</button>}
+            onClick={() =>
+              submitQuery(formData, token)
+            }
+          >
+            Request
+          </button> : <button className="bg-[#FFF348] self-end px-4 py-1 rounded-md"
+            onClick={connect}>Connect</button>}
         </div>
         {/* <video
           src="/gradient.mp4"
