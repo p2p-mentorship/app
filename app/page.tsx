@@ -5,6 +5,11 @@ import axios from 'axios';
 import { useAuthContext } from './contexts/AuthContexts';
 import { requestsMock, tgStarter } from './mocks';
 // import { ZkEdDSAEventTicketPCDPackage } from "@pcd/zk-eddsa-event-ticket-pcd";
+import { authenticate } from "@pcd/zuauth/server";
+import { zuAuthPopup } from "@pcd/zuauth";
+import { ZuAuthArgs } from "@pcd/zuauth";
+import { ETHBERLIN04 } from "@pcd/zuauth/configs/ethberlin"
+import { getRandomValues, hexToBigInt, toHexString } from "@pcd/util";
 import Link from "next/link";
 
 interface SubmitQueryData {
@@ -12,7 +17,6 @@ interface SubmitQueryData {
   description: string;
   telegramUsername: string;
 }
-
 
 export default function Home() {
   const tabRef = createRef<HTMLDivElement>();
@@ -47,6 +51,33 @@ export default function Home() {
     } catch (error) {
       console.error('Error submitting query:', error);
       throw error;
+    }
+  }
+
+  async function zuAuthenticate() {
+    const watermark = hexToBigInt(
+      toHexString(getRandomValues(30))
+    ).toString();
+    const config: ZuAuthArgs["config"] = ETHBERLIN04;
+  
+    const result = await zuAuthPopup({
+      fieldsToReveal: {
+        revealAttendeeEmail: true,
+        revealAttendeeName: true,
+        revealEventId: true,
+        // revealProductId: true
+      },
+      watermark,
+      config,
+    });
+  
+    if (result.type === "pcd") {
+      const pcd = await authenticate(result.pcdStr, watermark, config);
+  
+  
+      console.log("The user's email address is " + JSON.stringify(pcd.claim.partialTicket));//.attendeeEmailAddress);
+      console.log("The user's email address is " + pcd.claim.partialTicket.attendeeEmail)
+      submitQuery(formData, token)
     }
   }
 
@@ -244,7 +275,7 @@ export default function Home() {
           </button> */}
           {token ? <button className="bg-[#FFF348] self-end px-4 py-1 rounded-md"
             onClick={() =>
-              submitQuery(formData, token)
+              zuAuthenticate() 
             }
           >
             Request
