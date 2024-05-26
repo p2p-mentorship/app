@@ -23,6 +23,13 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Textarea } from "@/components/ui/textarea"
 import { useAuthContext } from './contexts/AuthContexts';
 import { requestsMock, tgStarter } from './mocks';
+import { zuAuthPopup } from "@pcd/zuauth";
+import { ZkEdDSAEventTicketPCDPackage } from "@pcd/zk-eddsa-event-ticket-pcd";
+import { authenticate } from "@pcd/zuauth/server";
+import { ZuAuthArgs } from "@pcd/zuauth";
+import { ETHBERLIN04 } from "@pcd/zuauth/configs/ethberlin"
+import { getRandomValues, hexToBigInt, toHexString } from "@pcd/util";
+
 
 interface SubmitQueryData {
   title: string;
@@ -30,6 +37,42 @@ interface SubmitQueryData {
   telegramUsername: string;
 }
 
+async function zuAuthenticate() {
+  const watermark = hexToBigInt(
+    toHexString(getRandomValues(30))
+  ).toString();
+// const config = [
+//   {
+//     "pcdType": "eddsa-ticket-pcd",
+//     "publicKey": [
+//       "1ebfb986fbac5113f8e2c72286fe9362f8e7d211dbc68227a468d7b919e75003",
+//       "10ec38f11baacad5535525bbe8e343074a483c051aa1616266f3b1df3fb7d204"
+//     ],
+//     "eventId": "53edb3e7-6733-41e0-a9be-488877c5c572",
+//     "eventName": "ETHBerlin04"
+//   }
+// ];
+const config: ZuAuthArgs["config"] = ETHBERLIN04;
+
+const result = await zuAuthPopup({
+  fieldsToReveal: {
+    revealAttendeeEmail: true,
+    revealAttendeeName: true,
+    revealEventId: true,
+    // revealProductId: true
+  },
+  watermark,
+  config,
+});
+
+  if (result.type === "pcd") {
+    const pcd = await authenticate(result.pcdStr, watermark, config);
+
+  
+    console.log("The user's email address is " + JSON.stringify(pcd.claim.partialTicket));//.attendeeEmailAddress);
+    console.log("The user's email address is " + pcd.claim.partialTicket.attendeeEmail)
+  }
+}
 
 // async function handleSubmitingRequest(queryData: SubmitQueryData, token: string) {
 //   // const queryData = {
@@ -113,6 +156,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Button onClick={zuAuthenticate}>ZuPass Auth</Button>
       <Tabs value={currentTab} onValueChange={setCurrentTab} defaultValue="account" className="w-[400px] lg-w-[600px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Offer Help</TabsTrigger>
