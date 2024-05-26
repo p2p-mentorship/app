@@ -3,20 +3,9 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface MapLocatorProps {
-  preview?: { floor: number; coords: Coordinate };
-  setter?: React.Dispatch<React.SetStateAction<Coordinate>>;
-}
-
-type Coordinate = { x: number; y: number };
-
-export default function MapLocator(props: MapLocatorProps) {
+export default function MapLocator() {
   const [floor, setFloor] = useState(-1);
-  const [coords, setCoords] = useState<Coordinate>({ x: 0, y: 0 });
-
-  useEffect(() => {
-    props.setter && props.setter(coords);
-  }, [coords]);
+  const [coords, setCoords] = useState<{x: number, y: number}>({ x: 0, y: 0 });
 
   return (
     <section className="h-screen flex p-0 relative overflow-hidden flex-col w-full border-b border-b-[#111110] items-center justify-center">
@@ -51,8 +40,7 @@ export default function MapLocator(props: MapLocatorProps) {
         </div>
       </div>
       <div className="w-[60vw] m-5 text-black p-5 z-10">
-        {!props.preview && (
-          <>
+        
             {floor == -1 && <FloorSelector setFloor={setFloor} />}
             {floor != -1 && (
               <MapPreview
@@ -62,27 +50,7 @@ export default function MapLocator(props: MapLocatorProps) {
                 setCoords={setCoords}
               />
             )}
-          </>
-        )}
-
-        {props.preview && (
-          <div className="realtive">
-            <img
-              src={floors[props.preview.floor].image}
-              alt={floors[props.preview.floor].title}
-            />
-            <img
-              src="https://pngimg.com/d/google_maps_pin_PNG72.png"
-              alt="pin"
-              className="absolute w-[4%]"
-              style={{
-                left: props.preview.coords.x,
-                top: props.preview.coords.y - 70,
-              }}
-            />
-          </div>
-        )}
-      </div>
+        </div>
     </section>
   );
 }
@@ -108,6 +76,11 @@ function FloorSelector(props: {
       </div>
     </div>
   );
+}
+
+interface Coordinate {
+  x: number;
+  y: number;
 }
 
 function MapPreview(props: {

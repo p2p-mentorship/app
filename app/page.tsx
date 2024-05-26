@@ -24,7 +24,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useAuthContext } from './contexts/AuthContexts';
 import { requestsMock, tgStarter } from './mocks';
 import { zuAuthPopup } from "@pcd/zuauth";
-import { ZkEdDSAEventTicketPCDPackage } from "@pcd/zk-eddsa-event-ticket-pcd";
+// import { ZkEdDSAEventTicketPCDPackage } from "@pcd/zk-eddsa-event-ticket-pcd";
 import { authenticate } from "@pcd/zuauth/server";
 import { ZuAuthArgs } from "@pcd/zuauth";
 import { ETHBERLIN04 } from "@pcd/zuauth/configs/ethberlin"
