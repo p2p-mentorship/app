@@ -32,11 +32,21 @@ model Query {
 }
 
 model Mentor {
-  id               Int    @id @default(autoincrement())
+  id               Int                 @id @default(autoincrement())
   name             String
   description      String
   telegramUsername String
   address          String
+  availablity      MentorAvailablity[]
+}
+
+model MentorAvailablity {
+  id        Int      @id @default(autoincrement())
+  mentorId  Int
+  startTime DateTime
+  endTime   DateTime
+
+  mentor Mentor @relation(fields: [mentorId], references: [id])
 }
 
 model Map {
