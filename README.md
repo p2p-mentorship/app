@@ -1,3 +1,20 @@
+# P2P Mentorship
+
+## Overview
+
+P2P Mentorship is designed to bridge the knowledge gap in the rapidly evolving field of web3 technologies. By creating a community-driven environment, the platform enables users to seek assistance from knowledgeable mentors and gain insights into the latest advancements in the web3 space. Whether you're a beginner looking to understand the basics or an experienced developer needing specific guidance, P2P Mentorship offers a supportive and interactive learning experience.
+
+Visit our website at [https://p2pmentorship.com/](https://p2pmentorship.com/) to join the community and start your learning journey today!
+
+## Features
+- **User-Friendly Interface:** Easy-to-navigate platform allowing seamless connection between mentors and mentees.
+- **Expert Mentors:** Access to a network of experienced professionals in various web3 technologies, including blockchain, smart contracts, decentralized applications (dApps), and more.
+- **Integration with telegram:** Mentors can connect with mentees
+
+## Future Plans
+
+Since we have already made the web app available publicly, our next step is adding support for other events and allowing people to verify themselves for next hackathons e.g. EthPrague that's happening in 1 week from now.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
