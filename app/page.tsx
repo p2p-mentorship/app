@@ -30,7 +30,6 @@ import { ZuAuthArgs } from "@pcd/zuauth";
 import { ETHBERLIN04 } from "@pcd/zuauth/configs/ethberlin"
 import { getRandomValues, hexToBigInt, toHexString } from "@pcd/util";
 
-
 interface SubmitQueryData {
   title: string;
   description: string;
