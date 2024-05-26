@@ -4,12 +4,13 @@ export default function mentors() {
   return (
     <section className="h-screen flex p-0 relative overflow-hidden flex-col w-full border-b border-b-[#111110]">
       <div className="flex justify-between absolute top-12 left-0 w-full border-b-[1px] border-b-[#111110] items-center px-12 py-2">
-        <Link href="/home" className="text-3xl font-bold font-cabin text-[#111110]  flex items-center gap-x-2">
+        <Link href="/" className="text-3xl font-bold font-cabin text-[#111110]  flex items-center gap-x-2">
           <img src="/gb.png" className="w-10" />
           <h1>P2P Mentorship</h1>
         </Link>
         <div className="flex gap-x-8 text-xl font-cabin z-10">
-          <h1>Issues</h1>
+          {/* <h1>Issues</h1> */}
+          <Link href="/">Issues</Link>
           <Link href="/mentors">Mentors</Link>
           <Link href="/map">Map</Link>
         </div>

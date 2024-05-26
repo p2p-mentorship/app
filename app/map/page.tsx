@@ -5,20 +5,21 @@ import { twMerge } from "tailwind-merge";
 
 export default function MapLocator() {
   const [floor, setFloor] = useState(-1);
-  const [coords, setCoords] = useState<{x: number, y: number}>({ x: 0, y: 0 });
+  const [coords, setCoords] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
 
   return (
     <section className="h-screen flex p-0 relative overflow-hidden flex-col w-full border-b border-b-[#111110] items-center justify-center">
       <div className="flex justify-between absolute top-12 left-0 w-full border-b-[1px] border-b-[#111110] items-center px-12 py-2">
         <Link
-          href="/home"
+          href="/"
           className="text-3xl font-bold font-cabin text-[#111110]  flex items-center gap-x-2"
         >
           <img src="/gb.png" className="w-10" />
           <h1>P2P Mentorship</h1>
         </Link>
         <div className="flex gap-x-8 text-xl font-cabin z-10">
-          <h1>Issues</h1>
+          {/* <h1>Issues</h1> */}
+          <Link href="/">Issues</Link>
           <Link href="/mentors">Mentors</Link>
           <Link href="/map">Map</Link>
         </div>
@@ -40,17 +41,17 @@ export default function MapLocator() {
         </div>
       </div>
       <div className="w-[60vw] m-5 text-black p-5 z-10">
-        
-            {floor == -1 && <FloorSelector setFloor={setFloor} />}
-            {floor != -1 && (
-              <MapPreview
-                floor={floor}
-                setFloor={setFloor}
-                coords={coords}
-                setCoords={setCoords}
-              />
-            )}
-        </div>
+
+        {floor == -1 && <FloorSelector setFloor={setFloor} />}
+        {floor != -1 && (
+          <MapPreview
+            floor={floor}
+            setFloor={setFloor}
+            coords={coords}
+            setCoords={setCoords}
+          />
+        )}
+      </div>
     </section>
   );
 }
