@@ -25,6 +25,10 @@ model Query {
   telegramUsername String
   resolved         Boolean @default(false)
   ownerAddress     String
+  mapCoordX        Int?
+  mapCoordY        Int?
+  mapFloor         Int?
+  tags             String?
 }
 
 model Map {

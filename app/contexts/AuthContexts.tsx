@@ -1,6 +1,5 @@
 "use client"
 
-import { useModal } from "connectkit";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 import axios from "axios";
